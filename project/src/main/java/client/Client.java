@@ -34,7 +34,7 @@ public class Client {
 
                 System.out.println("Server response: " + response);
                 if(response.equals("!bye")){
-                    System.exit(1);
+                    System.exit(0);
                 }
             }
         } catch (UnknownHostException e) {
