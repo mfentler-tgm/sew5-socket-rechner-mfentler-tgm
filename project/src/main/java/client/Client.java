@@ -26,10 +26,16 @@ public class Client {
                         new BufferedReader(
                                 new InputStreamReader(System.in))
         ) {
+            System.out.println("Connected with server ..\nEnter tasks now");
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
                 out.println(userInput);
-                System.out.println("echo: " + in.readLine());
+                String response = in.readLine();
+
+                System.out.println("Server response: " + response);
+                if(response.equals("!bye")){
+                    System.exit(1);
+                }
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

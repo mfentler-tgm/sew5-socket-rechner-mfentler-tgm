@@ -23,20 +23,39 @@ public class CalculatorThread extends Thread implements CalculatorInterface{
         ) {
             String userInput;
             while ((userInput = in.readLine()) != null) {
-                out.println(userInput);
-                String wantedMethod = userInput.substring(0,userInput.indexOf(" "));
-                switch (wantedMethod){
-                    case "Add":
-                        break;
-                    case "Subtract":
-                        break;
-                    case "Bye":
-                        exit();
-                        break;
-                    default:
-                        out.println("unsuported calc method");
-                        break;
 
+                if(userInput.contains(" ")) {
+                    String wantedMethod = userInput.substring(0, userInput.indexOf(" "));
+                    switch (wantedMethod) {
+                        case "!add":
+                            userInput = "";
+                            break;
+                        case "!subtract":
+                            double arg1 = 0;
+                            double arg2 = 0;
+                            out.println(subtract(arg1, arg2));
+                            userInput = "";
+                            break;
+                        default:
+                            out.println("unsuported calc method");
+                            userInput = "";
+                            break;
+                    }
+                }else{
+                    switch(userInput){
+                        case "!bye":
+                            out.println(userInput);
+                            exit();
+                            return;
+                        case "!view":
+                            out.println(view());
+                            userInput = "";
+                            break;
+                        default:
+                            out.println("The server doesnt understand your request: '" + userInput + "'");
+                            userInput = "";
+                            break;
+                    }
                 }
             }
             exit();

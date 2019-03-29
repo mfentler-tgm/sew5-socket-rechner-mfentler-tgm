@@ -8,7 +8,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
 
         if (args.length != 1) {
-            System.err.println("Usage: java KKMultiServer <port number>");
+            System.err.println("Server needs port as startup argument");
             System.exit(1);
         }
 
