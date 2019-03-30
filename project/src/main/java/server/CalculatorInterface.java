@@ -5,4 +5,5 @@ public interface CalculatorInterface {
     public double add(double z1, double z2);
     public double subtract(double z1, double z2);
     public int view();
+    public void setCredits(int c);
 }

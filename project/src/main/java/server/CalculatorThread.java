@@ -1,5 +1,6 @@
 package server;
 
+import javax.swing.text.View;
 import java.io.*;
 import java.net.*;
 
@@ -26,15 +27,33 @@ public class CalculatorThread extends Thread implements CalculatorInterface{
 
                 if(userInput.contains(" ")) {
                     String wantedMethod = userInput.substring(0, userInput.indexOf(" "));
+
+                    double calc_arg1 = 0;
+                    double calc_arg2 = 0;
+                    try {
+                        String cuttedString = userInput.substring(userInput.indexOf(" ")+1, userInput.length());
+                        calc_arg1 = Double.parseDouble(cuttedString.substring(0, cuttedString.indexOf(" ")));
+                        calc_arg2 = Double.parseDouble(cuttedString.substring(cuttedString.indexOf(" ")+1, cuttedString.length()));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        out.println("Invalid args");
+                    }
                     switch (wantedMethod) {
                         case "!add":
-                            userInput = "";
+                            if(view() > 0) {
+                                out.println(add(calc_arg1, calc_arg2));
+                                userInput = "";
+                            }else{
+                                out.println("You do not have enough credits to do that");
+                            }
                             break;
                         case "!subtract":
-                            double arg1 = 0;
-                            double arg2 = 0;
-                            out.println(subtract(arg1, arg2));
-                            userInput = "";
+                            if(view() > 0){
+                                out.println(subtract(calc_arg1, calc_arg2));
+                                userInput = "";
+                            }else{
+                                out.println("You do not have enough credits to do that");
+                            }
                             break;
                         default:
                             out.println("unsuported calc method");
@@ -48,7 +67,7 @@ public class CalculatorThread extends Thread implements CalculatorInterface{
                             exit();
                             return;
                         case "!view":
-                            out.println(view());
+                            out.println("Your credits = " + view());
                             userInput = "";
                             break;
                         default:
@@ -75,11 +94,13 @@ public class CalculatorThread extends Thread implements CalculatorInterface{
 
     @Override
     public double add(double z1, double z2) {
+        setCredits(view() - 1);
         return z1 + z2;
     }
 
     @Override
     public double subtract(double z1, double z2) {
+        setCredits(view() - 1);
         return z1 - z2;
     }
 
@@ -87,4 +108,10 @@ public class CalculatorThread extends Thread implements CalculatorInterface{
     public int view() {
         return this.credits;
     }
+
+    @Override
+    public void setCredits(int c) {
+        this.credits = c;
+    }
+
 }
