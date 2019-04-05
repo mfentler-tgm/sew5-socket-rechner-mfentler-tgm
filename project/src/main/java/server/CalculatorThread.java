@@ -126,6 +126,7 @@ public class CalculatorThread extends Thread implements Calculator {
 
     @Override
     public void sendToClient(String output) {
+        System.out.println("Bin im alten");
         try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(output);

@@ -21,8 +21,10 @@ public class Server {
                     new CalculatorThread(serverSocket.accept()).start();
                 else{
                     if(args[1].toLowerCase().equals("synchron")){
+                        System.out.println("Starting synchron calculator thread .. ");
                         new CalculatorThreadSynchron(new CalculatorThread(serverSocket.accept())).start();
                     }else if(args[1].toLowerCase().equals("asynchron")){
+                        System.out.println("Starting asynchron calculator thread .. ");
                         new CalculatorThreadAsynchron(new CalculatorThread(serverSocket.accept())).start();
                     }
                 }
