@@ -7,7 +7,7 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
 
-        if (args.length != 1) {
+        if (args.length < 1) {
             System.err.println("Server needs port as startup argument");
             System.exit(1);
         }
@@ -17,7 +17,15 @@ public class Server {
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (listening) {
-                new CalculatorThread(serverSocket.accept()).start();
+                if(args.length != 2)
+                    new CalculatorThread(serverSocket.accept()).start();
+                else{
+                    if(args[1].toLowerCase().equals("synchron")){
+                        new CalculatorThreadSynchron(new CalculatorThread(serverSocket.accept())).start();
+                    }else if(args[1].toLowerCase().equals("asynchron")){
+                        new CalculatorThreadAsynchron(new CalculatorThread(serverSocket.accept())).start();
+                    }
+                }
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);

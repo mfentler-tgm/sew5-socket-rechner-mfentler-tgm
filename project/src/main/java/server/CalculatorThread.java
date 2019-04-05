@@ -1,12 +1,11 @@
 package server;
 
-import javax.swing.text.View;
 import java.io.*;
 import java.net.*;
 
-public class CalculatorThread extends Thread implements CalculatorInterface {
+public class CalculatorThread extends Thread implements Calculator {
 
-    private Socket socket = null;
+    protected Socket socket = null;
     private int credits = 10;
 
     public CalculatorThread(Socket s) {
@@ -14,6 +13,7 @@ public class CalculatorThread extends Thread implements CalculatorInterface {
         this.socket = s;
     }
 
+    @Override
     public void run() {
 
         //try(
@@ -145,5 +145,10 @@ public class CalculatorThread extends Thread implements CalculatorInterface {
             e.printStackTrace();
         }
         return "";
+    }
+
+    @Override
+    public Socket getSocket(){
+        return this.socket;
     }
 }
